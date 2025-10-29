@@ -1,0 +1,144 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity alu is
+    port (
+        clk_i     : in  std_logic;
+        res_ni    : in  std_logic;                       -- active-low async reset
+        op1_i     : in  signed(5 downto 0);
+        op2_i     : in  signed(5 downto 0);
+        opcode_i  : in  std_logic_vector(3 downto 0);
+        result_o  : out signed(5 downto 0);
+        zero_o    : out std_logic;
+        carry_o   : out std_logic                        -- "overflow" for signed add/sub
+    );
+end alu;
+
+architecture rtl of alu is
+    signal result_s : signed(5 downto 0);
+begin
+    process(clk_i, res_ni)
+        variable tmp_overflow : std_logic;
+        variable result_v     : signed(5 downto 0);
+        variable sum_v        : signed(5 downto 0);
+        variable diff_v       : signed(5 downto 0);
+    begin
+        if res_ni = '0' then
+            result_s <= (others => '0');
+            zero_o   <= '1';
+            carry_o  <= '0';
+
+        elsif rising_edge(clk_i) then
+            tmp_overflow := '0';
+            result_v     := (others => '0');
+
+            case opcode_i is
+                -- 0000 PASS A
+                when "0000" =>
+                    result_v := op1_i;
+
+                -- 0001 ADD (signed)
+                when "0001" =>
+                    sum_v    := op1_i + op2_i;
+                    result_v := sum_v;
+                    if (op1_i(5) = op2_i(5)) and (sum_v(5) /= op1_i(5)) then
+                        tmp_overflow := '1';
+                    end if;
+
+                -- 0010 SUB (signed)
+                when "0010" =>
+                    diff_v   := op1_i - op2_i;
+                    result_v := diff_v;
+                    if (op1_i(5) /= op2_i(5)) and (diff_v(5) /= op1_i(5)) then
+                        tmp_overflow := '1';
+                    end if;
+
+                -- 0011 MUL (truncate to 6)
+                when "0011" =>
+                    result_v := resize(op1_i * op2_i, 6);
+
+                -- 0100 DIV (guard divide by zero)
+                when "0100" =>
+                    if op2_i /= 0 then
+                        result_v := op1_i / op2_i;
+                    else
+                        result_v := (others => '0');  -- policy: return 0
+                    end if;
+
+                -- 0101 AND
+                when "0101" =>
+                    result_v := op1_i and op2_i;
+
+                -- 0110 OR
+                when "0110" =>
+                    result_v := op1_i or op2_i;
+
+                -- 0111 XOR
+                when "0111" =>
+                    result_v := op1_i xor op2_i;
+
+                -- 1000 LSL1 (logical left shift by 1)
+                when "1000" =>
+                    result_v := shift_left(op1_i, 1);
+                    -- keep tmp_overflow = '0' to maintain overflow semantics
+
+                -- 1001 ASR1 (arithmetic right shift by 1)
+                when "1001" =>
+                    result_v := shift_right(op1_i, 1);
+
+                -- 1010 NOT A
+                when "1010" =>
+                    result_v := not op1_i;
+
+                -- 1011 NEG A (two's complement)
+                when "1011" =>
+                    result_v := -op1_i;
+                    -- overflow when negating minimum value (-32 for 6-bit signed)
+                    if op1_i = to_signed(-32, 6) then
+                        tmp_overflow := '1';
+                    end if;
+
+                -- 1100 INC A
+                when "1100" =>
+                    result_v := op1_i + 1;
+                    -- signed overflow if +31 -> -32
+                    if (op1_i(5) = '0') and (result_v(5) = '1') then
+                        tmp_overflow := '1';
+                    end if;
+
+                -- 1101 DEC A
+                when "1101" =>
+                    result_v := op1_i - 1;
+                    -- signed overflow if -32 -> +31
+                    if (op1_i(5) = '1') and (result_v(5) = '0') then
+                        tmp_overflow := '1';
+                    end if;
+
+                -- 1110 SLT (set if A < B, signed)
+                when "1110" =>
+                    if op1_i < op2_i then
+                        result_v := to_signed(1, 6);
+                    else
+                        result_v := to_signed(0, 6);
+                    end if;
+
+                -- 1111 XNOR
+                when "1111" =>
+                    result_v := not (op1_i xor op2_i);
+            end case;
+
+            -- Register result and flags
+            result_s <= result_v;
+            carry_o  <= tmp_overflow;                 -- remains "overflow" for add/sub only
+
+            if result_v = 0 then
+                zero_o <= '1';
+            else
+                zero_o <= '0';
+            end if;
+        end if;
+    end process;
+
+    result_o <= result_s;
+end rtl;
