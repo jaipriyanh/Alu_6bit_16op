@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 -- ============================================================================
--- tt_um_vhdl_ALU_top : 6-bit wrapper for the fixed 6-bit ALU
+-- tt_um_vhdl_ALU_top : 6-bit wrapper for the fixed 6-bit ALU (alu_6bit)
 --
 -- Inputs:
 --   ui_in  [5:0]  = A (signed, 6-bit)
@@ -42,29 +42,13 @@ entity tt_um_vhdl_ALU_top is
 end tt_um_vhdl_ALU_top;
 
 architecture Behavioral of tt_um_vhdl_ALU_top is
-
-    -- Fixed 6-bit ALU (no generics)
-    component alu
-        port (
-            clk_i     : in  std_logic;
-            res_ni    : in  std_logic;                -- active-low reset
-            op1_i     : in  signed(5 downto 0);
-            op2_i     : in  signed(5 downto 0);
-            opcode_i  : in  std_logic_vector(3 downto 0);
-            result_o  : out signed(5 downto 0);
-            zero_o    : out std_logic;
-            carry_o   : out std_logic                 -- signed overflow for arithmetic
-        );
-    end component;
-
     -- Internal signals (6-bit wide operands/result)
     signal op1_s    : signed(5 downto 0);
     signal op2_s    : signed(5 downto 0);
     signal opcode_s : std_logic_vector(3 downto 0);
     signal result_s : signed(5 downto 0);
     signal zero_s   : std_logic;
-    signal carry_s  : std_logic;
-
+    signal carry_s  : std_logic;  -- overflow flag from ALU
 begin
     -- =========
     -- Inputs
@@ -80,9 +64,9 @@ begin
     opcode_s(1 downto 0) <= ui_in(7 downto 6);
 
     -- =========
-    -- DUT
+    -- DUT (direct entity instantiation of your present ALU)
     -- =========
-    u_alu: alu
+    u_alu: entity work.alu_6bit
         port map (
             clk_i    => clk,
             res_ni   => rst_n,
@@ -97,15 +81,12 @@ begin
     -- =========
     -- Outputs
     -- =========
-    -- Map the 6-bit result directly to bits [7:2]
     uo_out(7 downto 2) <= std_logic_vector(result_s);
     uo_out(1)          <= zero_s;
-    uo_out(0)          <= carry_s;
+    uo_out(0)          <= carry_s;      -- overflow
 
-    -- Keep UIO as input-only
-    uio_out <= (others => '0');
+    uio_out <= (others => '0');         -- keep UIO as inputs only
     uio_oe  <= (others => '0');
 
     -- 'ena' is unused by design
-
 end Behavioral;
