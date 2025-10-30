@@ -20,8 +20,8 @@ project:
   # WARNING: VHDL support in Tiny Tapeout is experimental. The template may get changes during
   #          the shuttle and VHDL support may be dropped for future shuttles if we see low usage.
   source_files:
-    - "tt_um_vhdl_ALU_top.vhd"
-    - "alu.vhd"
+    - "tt_um_vhdl_ALU_top.vhdl"
+    - "Alu_6bit.vhdl"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
