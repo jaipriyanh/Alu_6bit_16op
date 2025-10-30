@@ -42,6 +42,19 @@ entity tt_um_vhdl_ALU_top is
 end tt_um_vhdl_ALU_top;
 
 architecture Behavioral of tt_um_vhdl_ALU_top is
+
+        component alu_6bit is
+        Port (
+        clk_i     : in  std_logic;
+        res_ni    : in  std_logic;                       -- active-low async reset
+        op1_i     : in  signed(5 downto 0);
+        op2_i     : in  signed(5 downto 0);
+        opcode_i  : in  std_logic_vector(3 downto 0);
+        result_o  : out signed(5 downto 0);
+        zero_o    : out std_logic;
+        carry_o   : out std_logic      
+        );
+    end component;
     -- Internal signals (6-bit wide operands/result)
     signal op1_s    : signed(5 downto 0);
     signal op2_s    : signed(5 downto 0);
