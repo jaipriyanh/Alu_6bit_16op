@@ -79,7 +79,7 @@ begin
     -- =========
     -- DUT (direct entity instantiation of your present ALU)
     -- =========
-    u_alu: entity work.alu_6bit
+    u_alu: alu_6bit
         port map (
             clk_i    => clk,
             res_ni   => rst_n,
