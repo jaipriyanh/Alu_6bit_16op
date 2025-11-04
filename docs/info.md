@@ -37,7 +37,12 @@ OVF is a signed overflow flag (asserted for ADD/SUB/NEG/INC/DEC under two’s-co
 1110  SLT     RESULT = 1 if A < B else 0     (signed compare)
 1111  XNOR    RESULT = not (A xor B)         (bitwise)
 
-Mapping of ports: 
+Mapping of ports:
+Input port: ui_in[5:0]=A,
+            ui_in[7:6]=opcode[1:0],
+Bidirectional port : uio_in[7:2]=B,
+ui_in[7:6]=opcode[1:0],  
+uio_in[1:0]=opcode[3:2]
 
 
 ## How to test
