@@ -1,4 +1,4 @@
-<!---
+<--
 6-bit Signed ALU with TinyTapeout Wrapper
   Institution: FH Kärnten
   Course: Digital-1
