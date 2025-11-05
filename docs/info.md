@@ -77,4 +77,15 @@ I have tested the design using the Modelsim and these are the results i am able 
 
 ## External hardware
 
-ttList external hardware used in your project (e.g. PMOD, LED display, etc), if any
+3.3 V logic clock source or a microcontroller to drive clk.<br>
+Reset button for rst_n (active-low)<br>
+
+Inputs as switches (16 total)<br>
+2× 8-switch DIP blocks work nicely:<br>
+UI bank → ui[5:0] = A[5:0], ui[7:6] = opcode[1:0]<br>
+UIO bank → uio[7:2] = B[5:0], uio[1:0] = opcode[3:2]<br>
+
+Outputs as LEDs (8 total)<br>
+uo[7:2] → RESULT[5:0], uo[1] → ZERO, uo[0] → OVF<br>
+
+One LED per pin with ~330 Ω series resistors to 3.3 V (or to GND, depending on wiring).<br>
