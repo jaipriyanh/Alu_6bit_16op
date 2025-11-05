@@ -81,7 +81,7 @@ I have tested the design using the Modelsim and these are the results i am able 
 Reset button for rst_n (active-low)<br>
 
 Inputs as switches (16 total)<br>
-2× 8-switch DIP blocks work nicely:<br>
+2× 8-switch:<br>
 UI bank → ui[5:0] = A[5:0], ui[7:6] = opcode[1:0]<br>
 UIO bank → uio[7:2] = B[5:0], uio[1:0] = opcode[3:2]<br>
 
