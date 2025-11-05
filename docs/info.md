@@ -5,11 +5,11 @@ Program: Integrated Systems & Circuit Design
 
 ## How it works
 
-This design is a 6-bit signed (two’s-complement) ALU with a TinyTapeout wrapper.
-Core timing: Inputs (A, B, opcode) are sampled on a rising clock edge; RESULT/ZERO/OVF are registered and appear on the next rising edge (1-cycle latency).
-Signed input operand range: −32…+31.  
-Reset: rst_n is active-low, asynchronous. While low, the ALU holds RESULT=0, ZERO=1, OVF=0.
-Enable: ena is unused in this design (wrapper passes it through; it does not gate logic).
+This design is a 6-bit signed (two’s-complement) ALU with a TinyTapeout wrapper.<br>
+Core timing: Inputs (A, B, opcode) are sampled on a rising clock edge; RESULT/ZERO/OVF are registered and appear on the next rising edge (1-cycle latency).<br>
+Signed input operand range: −32…+31.<br> 
+Reset: rst_n is active-low, asynchronous. While low, the ALU holds RESULT=0, ZERO=1, OVF=0.<br>
+Enable: ena is unused in this design (wrapper passes it through; it does not gate logic).<br>
 
 **ALU core:** 
 For each clock cycle, one of 16 operations is selected by opcode.
