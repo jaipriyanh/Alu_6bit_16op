@@ -93,4 +93,3 @@ uio[1:0] = opcode[3:2]<br>
 ### Outputs as LEDs (8 total)<br>
 uo[7:2] → RESULT[5:0], uo[1] → ZERO, uo[0] → OVF<br>
 
-One LED per pin with ~330 Ω series resistors to 3.3 V (or to GND, depending on wiring).<br>
