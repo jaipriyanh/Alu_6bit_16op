@@ -18,22 +18,25 @@ OVF is a signed overflow flag (asserted for ADD/SUB/NEG/INC/DEC under two’s-co
 
 **Control truth table (opcode --> operation)**
 
-0000  PASSA   RESULT = A<br>
-0001  ADD     RESULT = A + B                 (OVF on signed overflow)<br>
-0010  SUB     RESULT = A - B                 (OVF on signed overflow)
-0011  MUL     RESULT = (A * B) mod 64        (truncate to 6 bits, OVF=0)
-0100  DIV     RESULT = A / B (signed); B=0 → 0 (ZERO=1, OVF=0)
-0101  AND     RESULT = A and B               (bitwise)
-0110  OR      RESULT = A or  B               (bitwise)
-0111  XOR     RESULT = A xor B               (bitwise)
-1000  LSL1    RESULT = A << 1                (logical left shift)
-1001  ASR1    RESULT = A >> 1                (arithmetic right shift; keeps sign)
-1010  NOT     RESULT = not A                 (bitwise)
-1011  NEG     RESULT = -A                    (OVF when A = -32)
-1100  INC     RESULT = A + 1                 (OVF when A = +31 → wraps to -32)
-1101  DEC     RESULT = A - 1                 (OVF when A = -32 → wraps to +31)
-1110  SLT     RESULT = 1 if A < B else 0     (signed compare)
-1111  XNOR    RESULT = not (A xor B)         (bitwise)
+| Opcode | Operation | Result | Notes |
+|:-----:|:----------|:-------|:------|
+| `0000` | PASSA | `A` | — |
+| `0001` | ADD | `A + B` | `OVF` on signed overflow |
+| `0010` | SUB | `A - B` | `OVF` on signed overflow |
+| `0011` | MUL | `(A * B) mod 64` | truncate to 6 bits, `OVF=0` |
+| `0100` | DIV | `A / B` | if `B=0` → `0`, `ZERO=1`, `OVF=0` |
+| `0101` | AND | `A and B` | bitwise |
+| `0110` | OR  | `A or  B` | bitwise |
+| `0111` | XOR | `A xor B` | bitwise |
+| `1000` | LSL1 | `A << 1` | logical left shift |
+| `1001` | ASR1 | `A >> 1` | arithmetic right shift (keeps sign) |
+| `1010` | NOT | `not A` | bitwise |
+| `1011` | NEG | `-A` | `OVF` when `A = -32` |
+| `1100` | INC | `A + 1` | `OVF` when `A = +31` (wraps to −32) |
+| `1101` | DEC | `A - 1` | `OVF` when `A = -32` (wraps to +31) |
+| `1110` | SLT | `1` if `A < B` else `0` | signed compare |
+| `1111` | XNOR | `not (A xor B)` | bitwise |
+
 
 Mapping of ports:
 Input port: ui_in[5:0]=A,<br>
