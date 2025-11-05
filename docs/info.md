@@ -18,8 +18,8 @@ OVF is a signed overflow flag (asserted for ADD/SUB/NEG/INC/DEC under two’s-co
 
 **Control truth table (opcode --> operation)**
 
-0000  PASSA   RESULT = A
-0001  ADD     RESULT = A + B                 (OVF on signed overflow)
+0000  PASSA   RESULT = A<br>
+0001  ADD     RESULT = A + B                 (OVF on signed overflow)<br>
 0010  SUB     RESULT = A - B                 (OVF on signed overflow)
 0011  MUL     RESULT = (A * B) mod 64        (truncate to 6 bits, OVF=0)
 0100  DIV     RESULT = A / B (signed); B=0 → 0 (ZERO=1, OVF=0)
