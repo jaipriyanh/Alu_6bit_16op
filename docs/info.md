@@ -36,14 +36,14 @@ OVF is a signed overflow flag (asserted for ADD/SUB/NEG/INC/DEC under two’s-co
 1111  XNOR    RESULT = not (A xor B)         (bitwise)
 
 Mapping of ports:
-Input port: ui_in[5:0]=A,
-            ui_in[7:6]=opcode[1:0],
+Input port: ui_in[5:0]=A,<br>
+            ui_in[7:6]=opcode[1:0],<br>
 
-Bidirectional port : uio_in[7:2]=B,
-                     uio_in[1:0]=opcode[3:2]
+Bidirectional port : uio_in[7:2]=B,<br>
+                     uio_in[1:0]=opcode[3:2]<br>
 
-Output port : uo_out[7:2]=RES[5:0]
-              uo_out[0]=OVF, uo_out[1]=ZERO
+Output port : uo_out[7:2]=RES[5:0]<br>
+              uo_out[0]=OVF, uo_out[1]=ZERO<br>
 
 
 ## How to test
