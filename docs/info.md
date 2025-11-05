@@ -50,8 +50,6 @@ Output port : uo_out[7:2]=RES[5:0]<br>
 
 
 ## How to test
-
-ttExplain how to use your project
 I have tested the design using the Modelsim and these are the results i am able to see.
 ![ALU timing waveform](image.png)
 
@@ -76,8 +74,6 @@ I have tested the design using the Modelsim and these are the results i am able 
 |  17 | DEC   |      13      | -32 |  0  |        31       |   0  |  1  |
 |  18 | SLT   |      14      |  -3 |  2  |        1        |   0  |  0  |
 |  19 | XNOR  |      15      |  21 |  15 |       -27       |   0  |  0  |
-
-
 
 ## External hardware
 
