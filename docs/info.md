@@ -5,8 +5,8 @@ Program: Integrated Systems & Circuit Design
 
 ## How it works
 
-This design is a 6-bit signed (two’s-complement) ALU with a TinyTapeout wrapper.<br>
-Core timing: Inputs (A, B, opcode) are sampled on a rising clock edge; RESULT/ZERO/OVF are registered and appear on the next rising edge (1-cycle latency).<br>
+This design is a 6-bit signed (two’s-complement) ALU.<br>
+Inputs (A, B, opcode) are sampled on a rising clock edge; RESULT/ZERO/OVF are registered and appear on the next rising edge (1-cycle latency).<br>
 Signed input operand range: −32…+31.<br> 
 Reset: rst_n is active-low, asynchronous. While low, the ALU holds RESULT=0, ZERO=1, OVF=0.<br>
 Enable: ena is unused in this design (wrapper passes it through; it does not gate logic).<br>
@@ -50,7 +50,9 @@ Output port : uo_out[7:2]=RES[5:0]<br>
 
 
 ## How to test
-I have tested the design using the Modelsim and these are the results i am able to see.
+
+To test the design, expect the following results:
+ModelSim simulatuion results:
 ![ALU timing waveform](image.png)
 
 |  #  | Op    | Opcode (dec) |  A  |  B  | Expected RESULT | ZERO | OVF |
@@ -77,15 +79,17 @@ I have tested the design using the Modelsim and these are the results i am able 
 
 ## External hardware
 
-3.3 V logic clock source or a microcontroller to drive clk.<br>
+clock source.<br>
 Reset button for rst_n (active-low)<br>
 
-Inputs as switches (16 total)<br>
-2× 8-switch:<br>
-UI bank → ui[5:0] = A[5:0], ui[7:6] = opcode[1:0]<br>
-UIO bank → uio[7:2] = B[5:0], uio[1:0] = opcode[3:2]<br>
+### Inputs as switches (16 total)<br>
+#### 2× 8-switch:<br>
+UI bank → ui[5:0] = A[5:0],<br>
+ui[7:6] = opcode[1:0]<br>
+UIO bank → uio[7:2] = B[5:0],<br>
+uio[1:0] = opcode[3:2]<br>
 
-Outputs as LEDs (8 total)<br>
+### Outputs as LEDs (8 total)<br>
 uo[7:2] → RESULT[5:0], uo[1] → ZERO, uo[0] → OVF<br>
 
 One LED per pin with ~330 Ω series resistors to 3.3 V (or to GND, depending on wiring).<br>
