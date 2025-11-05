@@ -52,6 +52,32 @@ Output port : uo_out[7:2]=RES[5:0]<br>
 ## How to test
 
 ttExplain how to use your project
+I have tested the design using the Modelsim and these are the results i am able to see.
+![ALU timing waveform](image.png)
+
+|  #  | Op    | Opcode (dec) |  A  |  B  | Expected RESULT | ZERO | OVF |
+| :-: | :---- | :----------: | :-: | :-: | :-------------: | :--: | :-: |
+|  1  | PASSA |       0      |  -3 |  0  |        -3       |   0  |  0  |
+|  2  | ADD   |       1      |  15 |  10 |        25       |   0  |  0  |
+|  3  | ADD   |       1      |  20 |  20 |       -24       |   0  |  1  |
+|  4  | SUB   |       2      |  10 |  7  |        3        |   0  |  0  |
+|  5  | SUB   |       2      | -30 |  10 |        24       |   0  |  1  |
+|  6  | MUL   |       3      |  7  |  5  |       -29       |   0  |  0  |
+|  7  | DIV   |       4      |  25 |  5  |        5        |   0  |  0  |
+|  8  | DIV   |       4      |  13 |  0  |        0        |   1  |  0  |
+|  9  | AND   |       5      |  21 |  15 |        5        |   0  |  0  |
+|  10 | OR    |       6      |  21 |  15 |        31       |   0  |  0  |
+|  11 | XOR   |       7      |  21 |  15 |        26       |   0  |  0  |
+|  12 | LSL1  |       8      |  5  |  0  |        10       |   0  |  0  |
+|  13 | ASR1  |       9      |  -4 |  0  |        -2       |   0  |  0  |
+|  14 | NOT   |      10      |  5  |  0  |        -6       |   0  |  0  |
+|  15 | NEG   |      11      | -32 |  0  |       -32       |   0  |  1  |
+|  16 | INC   |      12      |  31 |  0  |       -32       |   0  |  1  |
+|  17 | DEC   |      13      | -32 |  0  |        31       |   0  |  1  |
+|  18 | SLT   |      14      |  -3 |  2  |        1        |   0  |  0  |
+|  19 | XNOR  |      15      |  21 |  15 |       -27       |   0  |  0  |
+
+
 
 ## External hardware
 
