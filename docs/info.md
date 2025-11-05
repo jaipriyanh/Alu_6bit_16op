@@ -7,11 +7,11 @@ Program: Integrated Systems & Circuit Design
 
 This design is a 6-bit signed (two’s-complement) ALU with a TinyTapeout wrapper.
 Core timing: Inputs (A, B, opcode) are sampled on a rising clock edge; RESULT/ZERO/OVF are registered and appear on the next rising edge (1-cycle latency).
-Signed range: −32…+31.  
+Signed input operand range: −32…+31.  
 Reset: rst_n is active-low, asynchronous. While low, the ALU holds RESULT=0, ZERO=1, OVF=0.
 Enable: ena is unused in this design (wrapper passes it through; it does not gate logic).
 
-ALU core: 
+**ALU core:** 
 For each clock cycle, one of 16 operations is selected by opcode.
 ZERO flag is 1 when the computed result equals 0.
 OVF is a signed overflow flag (asserted for ADD/SUB/NEG/INC/DEC under two’s-complement rules). It is 0 for logic, shifts, MUL, DIV (Signed integer division, if B = 0, the result is 0 (ZERO=1, OVF=0)).
@@ -38,9 +38,12 @@ OVF is a signed overflow flag (asserted for ADD/SUB/NEG/INC/DEC under two’s-co
 Mapping of ports:
 Input port: ui_in[5:0]=A,
             ui_in[7:6]=opcode[1:0],
+
 Bidirectional port : uio_in[7:2]=B,
-ui_in[7:6]=opcode[1:0],  
-uio_in[1:0]=opcode[3:2]
+                     uio_in[1:0]=opcode[3:2]
+
+Output port : uo_out[7:2]=RES[5:0]
+              uo_out[0]=OVF, uo_out[1]=ZERO
 
 
 ## How to test
