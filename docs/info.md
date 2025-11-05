@@ -51,10 +51,11 @@ Output port : uo_out[7:2]=RES[5:0]<br>
 
 ## How to test
 
-To test the design, expect the following results:
-ModelSim simulatuion results:
-![ALU timing waveform](image.png)
+To test the design, expect the following results:<br>
 
+ModelSim simulatuion results:<br>
+![ALU timing waveform](image.png)
+<br>
 |  #  | Op    | Opcode (dec) |  A  |  B  | Expected RESULT | ZERO | OVF |
 | :-: | :---- | :----------: | :-: | :-: | :-------------: | :--: | :-: |
 |  1  | PASSA |       0      |  -3 |  0  |        -3       |   0  |  0  |
