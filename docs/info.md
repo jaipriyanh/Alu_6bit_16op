@@ -1,9 +1,8 @@
-<--
 6-bit Signed ALU with TinyTapeout Wrapper
   Institution: FH Kärnten
   Course: Digital-1
   Program: Integrated Systems & Circuit Design
--->
+
 
 ## How it works
 
