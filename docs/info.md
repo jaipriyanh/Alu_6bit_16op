@@ -12,8 +12,8 @@ Reset: rst_n is active-low, asynchronous. While low, the ALU holds RESULT=0, ZER
 Enable: ena is unused in this design (wrapper passes it through; it does not gate logic).<br>
 
 **ALU core:** 
-For each clock cycle, one of 16 operations is selected by opcode.
-ZERO flag is 1 when the computed result equals 0.
+For each clock cycle, one of 16 operations is selected by opcode.<br>
+ZERO flag is 1 when the computed result equals 0.<br>
 OVF is a signed overflow flag (asserted for ADD/SUB/NEG/INC/DEC under two’s-complement rules). It is 0 for logic, shifts, MUL, DIV (Signed integer division, if B = 0, the result is 0 (ZERO=1, OVF=0)).
 
 **Control truth table (opcode --> operation)**
